@@ -2,7 +2,7 @@
   <v-row class="desktop-menu" align="center" justify="center">
     <v-col cols="auto">
       <v-btn
-      class="button-font"
+        class="button-font"
         color="#bcfc3c"
         v-for="(button, index) in leftButtons"
         :key="'left' + index"
@@ -12,7 +12,13 @@
       </v-btn>
     </v-col>
     <v-col cols="auto">
-      <v-img class="menu-logo" :width="120" aspect-ratio="4/3" cover :src="LogoMenu"></v-img>
+      <img
+        class="menu-logo"
+        :width="120"
+        aspect-ratio="4/3"
+        contain
+        :src="LogoMenu"
+      ></img>
     </v-col>
     <v-col cols="auto">
       <v-btn
@@ -50,11 +56,10 @@ const rightButtons = ref([
   font-family: "Big Shoulders Stencil", sans-serif;
   font-optical-sizing: auto;
   font-size: 22px;
-  font-weight: 900;
+  font-weight: 700;
   font-style: normal;
-  
 }
-.menu-logo{
+.menu-logo {
   cursor: pointer;
 }
 .desktop-menu {

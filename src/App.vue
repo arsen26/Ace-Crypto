@@ -8,7 +8,16 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
 import Menu from "./components/Menu.vue";
+import { useRoute, useRouter } from "vue-router";
+
+const router = useRouter();
+const route = useRoute();
+
+onMounted(() => {
+  router.push("/Home");
+});
 </script>
 
 <style scoped>

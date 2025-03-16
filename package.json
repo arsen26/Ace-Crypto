@@ -6,20 +6,30 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "test": "vitest",
     "preview": "vite preview"
   },
   "dependencies": {
     "axios": "^1.8.3",
+    "chart.js": "^4.4.8",
+    "cryptocoins-icons": "^2.9.0",
+    "typed-js": "^0.2.3",
+    "typed.js": "^2.1.0",
     "vite-plugin-vuetify": "^2.1.0",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0",
-    "vuetify": "^3.7.16"
+    "vue-cryptoicon": "^0.18.1",
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
     "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/test-utils": "^2.4.6",
     "eslint-config-prettier": "^10.1.1",
+    "jest": "^29.7.0",
+    "jsdom": "^26.0.0",
     "prettier": "3.5.3",
     "vite": "^6.2.1",
-    "vite-plugin-vue-devtools": "^7.7.2"
+    "vite-plugin-vue-devtools": "^7.7.2",
+    "vuetify": "^3.7.16"
   }
 }

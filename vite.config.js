@@ -16,4 +16,12 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ["vuetify"],
   },
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./vitest.setup.js",
+    deps: {
+      inline: ["vuetify"],
+    },
+  },
 });
