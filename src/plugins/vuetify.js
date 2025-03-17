@@ -1,15 +1,15 @@
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
-import { md } from 'vuetify/iconsets/md' // Import Google Material Icons
+import { md } from 'vuetify/iconsets/md' 
 
 const vuetify = createVuetify({
   icons: {
-    defaultSet: 'md', // Përdor ikonat e Google Material Icons
+    defaultSet: 'md', 
     aliases,
     sets: {
-      md, // Google Material Icons
-      mdi, // Material Design Icons (opsionale)
+      md, 
+      mdi, 
     },
   },
 })
