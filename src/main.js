@@ -6,7 +6,7 @@ import Cryptoicon from "vue-cryptoicon";
 import icon from "vue-cryptoicon/src/icons";
 Cryptoicon.add(icon);
 
-import { Btc, Eth, Xrp, Eos, Bnb } from 'vue-cryptoicon/src/icons';
+import { Btc, Eth, Xrp, Eos, Bnb } from "vue-cryptoicon/src/icons";
 Cryptoicon.add([Btc, Eth, Xrp, Eos, Bnb]);
 
 const app = createApp(App);
