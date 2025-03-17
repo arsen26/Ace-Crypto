@@ -1,17 +1,17 @@
-import 'vuetify/styles'
-import { createVuetify } from 'vuetify'
-import { aliases, mdi } from 'vuetify/iconsets/mdi'
-import { md } from 'vuetify/iconsets/md' 
+import "vuetify/styles";
+import { createVuetify } from "vuetify";
+import { aliases, mdi } from "vuetify/iconsets/mdi";
+import { md } from "vuetify/iconsets/md";
 
 const vuetify = createVuetify({
   icons: {
-    defaultSet: 'md', 
+    defaultSet: "md",
     aliases,
     sets: {
-      md, 
-      mdi, 
+      md,
+      mdi,
     },
   },
-})
+});
 
-export default vuetify
+export default vuetify;

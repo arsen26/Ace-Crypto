@@ -1,6 +1,6 @@
 <template>
   <v-row class="container">
-    <v-col v-for="(card, i) in cardsItems" :key="i" cols="12" md="6">
+    <v-col v-for="(card, i) in cardsItems" :key="i" cols="12" lg="3" md="6">
       <v-card :color="card.color" class="mx-auto">
         <v-card-item>
           <div>
@@ -49,6 +49,9 @@ const cardsItems = ref([
 
 <style scoped>
 .container {
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 200px;
   background-color: #080d0f;
 }
 </style>
