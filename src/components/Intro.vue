@@ -1,29 +1,29 @@
 <template>
-  <v-row class="hero-containter">
+  <v-row class="hero-container">
     <v-col cols="6">
-      <h3 class="hero-moto">Follow your crypto investment</h3>
+      <h3 class="hero-motto">Track your crypto investments</h3>
       <h1 class="hero-title">
-        Ace Crypto best website for <br />
-        <span id="typed"> </span>
+        Ace Crypto – The best platform for <br />
+        <span id="typed"></span>
       </h1>
       <v-divider color="#bcfc3c"></v-divider>
-      <br /> <br>
+      <br /><br />
       <v-avatar
         v-for="crypto in cryptoIcons"
         :key="crypto.symbol"
         :image="crypto.iconUrl"
         size="50"
-        class="crypto-icons"
+        class="crypto-icon"
       ></v-avatar>
-      <v-avatar  size="50"
-      class="crypto-icons-last-one">
-    +48
-    </v-avatar>
-      <br /><br>
+      <v-avatar size="50" class="crypto-icons-last-one"> +48 </v-avatar>
+      <br /><br />
       <v-divider color="#bcfc3c"></v-divider>
+      <h3 class="hero-motto">
+        Click on an icon above to get the latest updates
+      </h3>
     </v-col>
     <v-col cols="4">
-      <v-img :src="image"> </v-img>
+      <v-img :src="image"></v-img>
     </v-col>
   </v-row>
 </template>
@@ -49,7 +49,7 @@ const cryptoIcons = ref([
   { symbol: "LINK", iconUrl: "" },
 ]);
 
-const getAllIcons = async () => {
+const fetchCryptoIcons = async () => {
   await Promise.all(
     cryptoIcons.value.map(async (crypto) => {
       try {
@@ -64,13 +64,13 @@ const getAllIcons = async () => {
   );
 };
 
-const transition = () => {
+const initTypedAnimation = () => {
   new Typed("#typed", {
     strings: [
-      "chasing crypto prices",
-      "chasing crypto updates",
-      "chasing crypto launches",
-      "more about crypto",
+      "tracking crypto prices",
+      "staying updated on crypto",
+      "following new crypto launches",
+      "exploring more about crypto",
     ],
     typeSpeed: 40,
     backSpeed: 50,
@@ -79,13 +79,13 @@ const transition = () => {
 };
 
 onMounted(() => {
-  getAllIcons();
-  transition();
+  fetchCryptoIcons();
+  initTypedAnimation();
 });
 </script>
 
 <style scoped>
-.crypto-icons-last-one{
+.crypto-icons-last-one {
   margin-left: -15px;
   margin-top: -40px;
   border: 1px solid #bcfc3c;
@@ -93,51 +93,46 @@ onMounted(() => {
   color: black;
   font-family: "Tektur", sans-serif;
   cursor: pointer;
-
+  transition: transform 0.3s ease-in-out;
 }
 .crypto-icons-last-one:hover {
   transform: scale(1.2);
-  transition: transform 0.3s ease-in-out;
-  cursor: pointer;
-
 }
-.crypto-icons {
+
+.crypto-icon {
   margin-left: -15px;
   margin-top: -40px;
   border: 1px solid #bcfc3c;
   background-color: #bcfc3c;
   cursor: pointer;
-
-}
-.crypto-icons:hover {
-  transform: scale(1.2);
   transition: transform 0.3s ease-in-out;
-  cursor: pointer;
-
 }
-.hero-moto {
+.crypto-icon:hover {
+  transform: scale(1.2);
+}
+
+.hero-motto {
   font-family: "Tektur", sans-serif;
-  font-optical-sizing: auto;
   font-size: 22px;
   font-weight: 700;
-  font-style: normal;
-  margin-bottom: -10px;
   color: #9c9ea2;
   cursor: pointer;
+  margin-bottom: -10px;
 }
+
 .hero-title,
 #typed {
   font-family: "Tektur", sans-serif;
-  font-optical-sizing: auto;
   font-weight: 900;
-  font-style: normal;
-  font-variation-settings: "wdth" 100;
   color: white;
 }
+
 #typed {
   color: #bcfc3c;
 }
-.hero-containter {
+
+.hero-container {
+  display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 200px;
