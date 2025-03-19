@@ -4,6 +4,7 @@
     <v-main>
       <router-view></router-view>
     </v-main>
+    <Foooter />
   </v-app>
 </template>
 
@@ -11,6 +12,7 @@
 import { ref, onMounted } from "vue";
 import Menu from "./components/Menu.vue";
 import { useRoute, useRouter } from "vue-router";
+import Footer from "./components/Footer.vue";
 
 const router = useRouter();
 const route = useRoute();
