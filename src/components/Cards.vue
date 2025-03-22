@@ -67,14 +67,14 @@ const cardsItems = ref([
 ]);
 const cardStyle = (i) => {
   return {
-    'box-shadow': `0 0 15px 2px ${cardsItems.value[i].color}`, // Përdor cardsItems.value për të aksesuar vlerat
-    height: i === 1 ? '300px' : 'auto',
-    'margin-left': i === 2 ? '-30px !important' : '0',
-    'z-index': i === 1 ? '1' : '0',
-    'margin-right': i === 0 ? '-30px !important' : '0',
-    'z-index': i === 1 ? '1' : '0',
+    "box-shadow": `0 0 15px 2px ${cardsItems.value[i].color}`, // Përdor cardsItems.value për të aksesuar vlerat
+    height: i === 1 ? "300px" : "auto",
+    "margin-left": i === 2 ? "-30px !important" : "0",
+    "z-index": i === 1 ? "1" : "0",
+    "margin-right": i === 0 ? "-30px !important" : "0",
+    "z-index": i === 1 ? "1" : "0",
   };
-}
+};
 </script>
 
 <style scoped>
@@ -90,7 +90,7 @@ const cardStyle = (i) => {
   transition:
     opacity 0.3s ease-in-out,
     box-shadow 0.3s ease-in-out;
-  background-color: #222; 
+  background-color: #222;
   color: white;
   padding: 20px;
   border-radius: 10px;
@@ -100,7 +100,7 @@ const cardStyle = (i) => {
   font-family: "Tektur", sans-serif;
   font-size: 20px;
   font-weight: 600;
-  margin-left: ;
+  margin-left:;
 }
 .container-text {
   background-color: #080d0f;

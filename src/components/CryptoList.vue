@@ -22,7 +22,7 @@
                 </th>
               </template>
               <template v-slot:item="{ item }">
-                <tr @click="testFunction(item)" class="clickable-row">
+                <tr @click="sendToCryptoDetails(item)" class="clickable-row">
                   <td>{{ item.name }}</td>
                   <td>{{ item.symbol }}</td>
                   <td>{{ item.max_supply }}</td>
@@ -34,7 +34,7 @@
                 <!-- <v-avatar size="30" class="mr-2">
                   <img :src="item.iconUrl" :alt="item.name" />
                 </v-avatar> -->
-                <span @click="testFunction">{{ item.name }}</span>
+                <span @click="sendToCryptoDetails">{{ item.name }}</span>
               </template>
             </v-data-table-virtual>
           </v-sheet>
@@ -47,7 +47,10 @@
 <script setup>
 import axios from "axios";
 import { ref, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 
+const router = useRouter();
+const route = useRoute();
 const cryptoList = ref([
   { title: "Name", value: "name", width: "200px", class: "my-header-style" },
   { title: "Symbol", value: "symbol", class: "my-header-style" },
@@ -75,8 +78,13 @@ const getData = async () => {
     console.error("Error fetching data:", error);
   }
 };
-const testFunction = (item) => {
-  console.log(item, "test");
+const sendToCryptoDetails = (item) => {
+  console.log(item.symbol, "item");
+  router.push({
+    name: "DetailsCrypto",
+    params: { id: item.symbol },
+  });
+  console.log(router, "router");
 };
 const formatMarketCap = (value) => {
   if (value >= 1e12) return (value / 1e12).toFixed(1) + "T";
