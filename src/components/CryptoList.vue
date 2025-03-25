@@ -14,7 +14,6 @@
               items-per-page="10"
               :items="items"
               height="500"
-            
             >
               <template v-slot:column.header="{ column }">
                 <th class="my-header-style">
@@ -49,7 +48,6 @@ import axios from "axios";
 import { ref, onMounted, nextTick } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
-
 
 const router = useRouter();
 const { mobile } = useDisplay();

@@ -59,8 +59,8 @@ const getCardInfo = async () => {
     const response = await axios.get(
       `https://data-api.coindesk.com/asset/v2/metadata?assets=${props.symbol}&asset_lookup_priority=SYMBOL&quote_asset=USD`,
     );
-    console.log(response,'=-> response');
-    selectedCrypto.value = response.data.Data?.[props.symbol];   
+    console.log(response, "=-> response");
+    selectedCrypto.value = response.data.Data?.[props.symbol];
   } catch (error) {
     console.error(error);
   } finally {
@@ -98,17 +98,17 @@ onMounted(() => {
 </script>
 
 <style scoped>
- .spinner-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-  }
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
 .tradingview-widget-container {
   margin-top: 100px;
   height: 600px !important;

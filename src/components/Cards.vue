@@ -7,7 +7,14 @@
     </div>
   </v-row>
   <v-row class="container">
-    <v-col v-for="(card, i) in cardsItems" :key="i" cols="12" lg="3" md="3" sm="4">
+    <v-col
+      v-for="(card, i) in cardsItems"
+      :key="i"
+      cols="12"
+      lg="3"
+      md="3"
+      sm="4"
+    >
       <v-card
         :color="card.color"
         class="mx-auto card-style"

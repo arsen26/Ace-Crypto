@@ -1,5 +1,10 @@
 <template>
-  <v-row class="desktop-menu" align="center" justify="center">
+  <v-row
+    v-if="width > 800"
+    class="desktop-menu"
+    align="center"
+    justify="center"
+  >
     <v-col cols="auto">
       <v-btn
         class="button-font"
@@ -18,7 +23,7 @@
         aspect-ratio="4/3"
         contain
         :src="LogoMenu"
-      ></img>
+      />
     </v-col>
     <v-col cols="auto">
       <v-btn
@@ -32,13 +37,59 @@
       </v-btn>
     </v-col>
   </v-row>
+  <v-app-bar v-if="width < 800" color="#171a1e" prominent>
+    <v-row class="row-icon-mobile-holder">
+      <h2 class="name-style name-style-mobile">
+        Ace
+        <span class="last-name-style last-name-style-mobile">Crypto</span>
+      </h2>
+      <v-spacer></v-spacer>
+
+      <v-app-bar-nav-icon
+        style="color: white"
+        variant="text"
+        @click.stop="drawer = !drawer"
+      ></v-app-bar-nav-icon>
+    </v-row>
+
+    <v-spacer></v-spacer>
+  </v-app-bar>
+
+  <v-navigation-drawer
+    style="background-color: #222831 !important; color: white"
+    v-model="drawer"
+    temporary
+    location="right"
+    ><img
+      class="menu-logo"
+      :width="120"
+      aspect-ratio="4/3"
+      contain
+      :src="LogoMenu"
+    />
+    <v-list>
+      <v-list-item
+        v-for="(item, index) in menuItems"
+        :key="index"
+        :title="item.title"
+        link
+        drawer="false;"
+      >
+        <template v-slot:prepend>
+          <v-icon class="mobile-icons" :icon="item.icon"></v-icon>
+        </template>
+      </v-list-item>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import LogoMenuImport from "@/assets/aceCryptoLogo2.ico";
 
 const LogoMenu = ref(LogoMenuImport);
+const width = ref(window.innerWidth);
+const drawer = ref(false);
 // Lista e butonave të ndarë
 const leftButtons = ref([
   { title: "Home", sendTo: "/" },
@@ -49,6 +100,22 @@ const rightButtons = ref([
   { title: "Crypto list", sendTo: "/crypto-list" },
   { title: "Contact", sendTo: "/contact" },
 ]);
+const menuItems = ref([...leftButtons.value, ...rightButtons.value]);
+
+const measureWidth = () => {
+  width.value = window.innerWidth;
+};
+
+const handleResize = () => {
+  measureWidth();
+};
+onMounted(() => {
+  measureWidth();
+  window.addEventListener("resize", handleResize);
+});
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", handleResize);
+});
 </script>
 
 <style scoped>
@@ -61,6 +128,17 @@ const rightButtons = ref([
 }
 .menu-logo {
   cursor: pointer;
+}
+@media (max-width: 800px) {
+  .name-style-mobile {
+    color: #bcfc3c;
+    animation: glow 2s infinite;
+    animation-delay: 0s;
+  }
+  .last-name-style-mobile {
+    animation: glowSurname 2s infinite;
+    animation-delay: 1.5s;
+  }
 }
 .desktop-menu {
   position: fixed;
