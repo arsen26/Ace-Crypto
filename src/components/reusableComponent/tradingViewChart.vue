@@ -1,5 +1,6 @@
 <template>
   <v-row class="justify-center align-center chart-container">
+    <!-- <flower-spinner :animation-duration="2500" :size="70" color="#ff1d5e" /> -->
     <v-col cols="12" lg="8" md="6" sm="12">
       <div ref="widgetContainer" class="tradingview-widget-container">
         <div class="tradingview-widget-container__widget"></div>
@@ -19,9 +20,9 @@
         <v-card-item>
           <div>
             <div class="text-overline mb-1"></div>
-            <div class="text-h6 mb-1">{{ selectedCrypto.NAME }}</div>
+            <div class="text-h6 mb-1">{{ selectedCrypto?.NAME }}</div>
             <div class="text-caption">
-              {{ selectedCrypto.ASSET_DESCRIPTION_SNIPPET }}
+              {{ selectedCrypto?.ASSET_DESCRIPTION_SNIPPET }}
             </div>
           </div>
         </v-card-item>
@@ -40,6 +41,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import axios from "axios";
+import { FlowerSpinner } from "epic-spinners";
 
 const widgetContainer = ref(null);
 const props = defineProps({ symbol: String });

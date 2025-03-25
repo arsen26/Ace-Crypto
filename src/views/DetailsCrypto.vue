@@ -6,15 +6,15 @@
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import tradingViewChart from "@/components/reusableComponent/tradingViewChart.vue";
-
 const route = useRoute();
-const cryptoSymbol = computed(() => route.params.id || "BTC");
+const cryptoSymbol = route.query.symbol
+console.log(cryptoSymbol);
 
 watch(
-  () => route.params.id,
-  (newId) => {
-    console.log("Crypto symbol updated:", newId);
-  },
+  () => route.query.symbol,
+  (newSymbol) => {
+    console.log("Crypto symbol updated:", newSymbol);
+  }
 );
 </script>
 

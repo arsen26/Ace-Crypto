@@ -1,24 +1,23 @@
 // router.js
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "@/views/HomeView.vue";
-import DetailsCrypto from "@/views/DetailsCrypto.vue";
 
-const routes = [
-  {
-    path: "/Home",
-    name: "Home",
-    component: HomeView,
-  },
-  {
-    path: "/cryptocurrency-details/:id",
-    name: "DetailsCrypto",
-    component: DetailsCrypto,
-  },
-];
-
+const DetailsCrypto = () => import("@/views/DetailsCrypto.vue");
+const HomeView = () => import("@/views/HomeView.vue");
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
+  routes: [
+    {
+      path: "/Home",
+      component: HomeView,
+      name: "Home",
+    },   
+    {
+      path: "/cryptocurrency-details/form",
+      component: DetailsCrypto,
+      name: "DetailsCrypto",
+    }
+    
+  ],
 });
 
 export default router;

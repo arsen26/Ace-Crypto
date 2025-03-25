@@ -14,6 +14,7 @@
         :image="crypto.iconUrl"
         size="50"
         class="crypto-icon"
+        @click="getDetailsInfo(crypto.symbol)"
       ></v-avatar>
       <v-avatar size="50" class="crypto-icons-last-one"> +48 </v-avatar>
       <br /><br />
@@ -33,7 +34,10 @@ import HeroImg from "@/assets/Group 1.png";
 import Typed from "typed.js";
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import { useRouter, useRoute } from "vue-router";
 
+const router = useRouter();
+const route = useRoute;
 const image = ref(HeroImg);
 
 const cryptoIcons = ref([
@@ -63,7 +67,10 @@ const fetchCryptoIcons = async () => {
     }),
   );
 };
-
+const getDetailsInfo = (item) => {
+  console.log("Getting details for:", item);
+  router.push({ name: "DetailsCrypto", query: { symbol: item } });
+};
 const initTypedAnimation = () => {
   new Typed("#typed", {
     strings: [
