@@ -10,13 +10,12 @@ const router = createRouter({
       path: "/Home",
       component: HomeView,
       name: "Home",
-    },   
+    },
     {
       path: "/cryptocurrency-details/form",
       component: DetailsCrypto,
       name: "DetailsCrypto",
-    }
-    
+    },
   ],
 });
 

@@ -13,14 +13,15 @@
               density="compact"
               items-per-page="10"
               :items="items"
-              height="500"            
+              height="500"
+            
             >
-              <!-- <template v-slot:column.header="{ column }">
+              <template v-slot:column.header="{ column }">
                 <th class="my-header-style">
                   <span>{{ column.title }}</span>
                 </th>
-              </template> -->
-              <!-- <template v-slot:item="{ item }">
+              </template>
+              <template v-slot:item="{ item }">
                 <tr @click="sendToCryptoDetails(item)" class="clickable-row">
                   <td>{{ item.name }}</td>
                   <td>{{ item.symbol }}</td>
@@ -28,7 +29,7 @@
                   <td>{{ item.market_cap }}</td>
                   <td>{{ item.price }}</td>
                 </tr>
-              </template> -->
+              </template>
               <template v-slot:item.name="{ item }">
                 <!-- <v-avatar size="30" class="mr-2">
                   <img :src="item.iconUrl" :alt="item.name" />
@@ -45,10 +46,14 @@
 
 <script setup>
 import axios from "axios";
-import { ref, onMounted ,nextTick } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { useDisplay } from "vuetify";
+
 
 const router = useRouter();
+const { mobile } = useDisplay();
+
 const route = useRoute();
 const cryptoList = ref([
   { title: "Name", value: "name", width: "200px", class: "my-header-style" },
@@ -63,7 +68,7 @@ const items = ref([]);
 const getData = async () => {
   try {
     const res = await axios.get("http://localhost:5000/crypto");
-    console.log(res.data.data,'=-=>> res data data');
+    console.log(res.data.data, "=-=>> res data data");
     items.value = res.data.data.map((item) => ({
       name: item.name,
       symbol: item.symbol,
@@ -79,7 +84,7 @@ const getData = async () => {
   }
 };
 const sendToCryptoDetails = (item) => {
-  router.push({ name: 'DetailsCrypto', query: { symbol: item.symbol } });
+  router.push({ name: "DetailsCrypto", query: { symbol: item.symbol } });
 };
 
 const formatMarketCap = (value) => {
