@@ -1,29 +1,23 @@
 <template>
   <div>
     <div v-if="spinner" class="spinner-overlay">
-      <flower-spinner :animation-duration="2500" :size="70" color="#ff1d5e" />
+      <flower-spinner :animation-duration="2500" :size="70" color="#bcfc3c" />
     </div>
     <v-row class="justify-center align-center chart-container">
-      <v-col cols="12" lg="8" md="6" sm="12">
-        <div ref="widgetContainer" class="tradingview-widget-container">
-          <div class="tradingview-widget-container__widget"></div>
-          <div class="tradingview-widget-copyright">
-            <a
-              href="https://www.tradingview.com/"
-              rel="noopener nofollow"
-              target="_blank"
-            >
-              <span class="blue-text">Track all markets on TradingView</span>
-            </a>
-          </div>
-        </div>
-      </v-col>
-      <v-col cols="12" lg="4" md="6" sm="12">
+      <!-- First column will be informations about crypto-->
+      <v-col class="details-style" cols="12" lg="4" md="6" sm="12">
         <v-card class="mx-auto card-content">
           <v-card-item>
             <div>
               <div class="text-overline mb-1"></div>
-              <div class="text-h6 mb-1">{{ selectedCrypto?.NAME }}</div>
+              <div class="text-h6 mb-1 crypto-title">
+                <v-avatar
+                  :image="selectedCrypto?.LOGO_URL"
+                  size="30"
+                ></v-avatar>
+                {{ selectedCrypto?.NAME }}
+                <span class="crypto-symbol">{{ selectedCrypto?.SYMBOL }}</span>
+              </div>
               <div class="text-caption">
                 {{ selectedCrypto?.ASSET_DESCRIPTION_SNIPPET }}
               </div>
@@ -37,6 +31,20 @@
             </v-btn>
           </v-card-actions>
         </v-card>
+      </v-col>
+      <v-col cols="12" lg="8" md="6" sm="12">
+        <div ref="widgetContainer" class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <div class="tradingview-widget-copyright">
+            <a
+              href="https://www.tradingview.com/"
+              rel="noopener nofollow"
+              target="_blank"
+            >
+              <span class="blue-text">Track all markets on TradingView</span>
+            </a>
+          </div>
+        </div>
       </v-col>
     </v-row>
   </div>
@@ -59,8 +67,8 @@ const getCardInfo = async () => {
     const response = await axios.get(
       `https://data-api.coindesk.com/asset/v2/metadata?assets=${props.symbol}&asset_lookup_priority=SYMBOL&quote_asset=USD`,
     );
-    console.log(response, "=-> response");
     selectedCrypto.value = response.data.Data?.[props.symbol];
+    console.log(selectedCrypto.value, "=->  selectedCrypto.value");
   } catch (error) {
     console.error(error);
   } finally {
@@ -98,6 +106,18 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.crypto-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+.crypto-symbol {
+  font-size: 18px;
+  font-weight: normal;
+  color: #9c9ea2;
+}
+.details-style {
+  border: 1px solid #e0e0e0;
+}
 .spinner-overlay {
   position: fixed;
   top: 0;

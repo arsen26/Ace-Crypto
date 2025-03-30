@@ -12,6 +12,7 @@
         v-for="(button, index) in leftButtons"
         :key="'left' + index"
         variant="text"
+        @click="sendToPath(button.sendTo)"
       >
         {{ button.title }}
       </v-btn>
@@ -32,6 +33,7 @@
         v-for="(button, index) in rightButtons"
         :key="'right' + index"
         variant="text"
+        @click="sendToPath(button.sendTo)"
       >
         {{ button.title }}
       </v-btn>
@@ -86,18 +88,20 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import LogoMenuImport from "@/assets/aceCryptoLogo2.ico";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const LogoMenu = ref(LogoMenuImport);
 const width = ref(window.innerWidth);
 const drawer = ref(false);
 // Lista e butonave të ndarë
 const leftButtons = ref([
-  { title: "Home", sendTo: "/" },
+  { title: "Home", sendTo: "/Home" },
   { title: "About Developer", sendTo: "/about-developer" },
 ]);
 
 const rightButtons = ref([
-  { title: "Crypto list", sendTo: "/crypto-list" },
+  { title: "Crypto News", sendTo: "/cryptocurrency-news" },
   { title: "Contact", sendTo: "/contact" },
 ]);
 const menuItems = ref([...leftButtons.value, ...rightButtons.value]);
@@ -108,6 +112,10 @@ const measureWidth = () => {
 
 const handleResize = () => {
   measureWidth();
+};
+const sendToPath = (path) => {
+  console.log(path, "path");
+  router.push(path);
 };
 onMounted(() => {
   measureWidth();
