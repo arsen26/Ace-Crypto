@@ -31,75 +31,46 @@
           </div>
         </div>
         <v-card class="mx-auto card-content" variant="outlined" color="white">
-          <v-row class="mt-1 ml-1">
-            <v-card-item>
-              <v-card variant="outlined">
+          <v-row
+            v-for="(row, rowIndex) in cryptoInformationArr"
+            :key="rowIndex"
+            class="mt-1 ml-0"
+          >
+            <v-col
+              v-for="(item, colIndex) in row"
+              :key="colIndex"
+              cols="12"
+              sm="6"
+              md="6"
+              class="pd-0 pr-1"
+            >
+              <v-card class="mr-5 crypto-information-style" variant="outlined">
                 <v-card-item>
-                  <span> Market Cap. </span>
-                  <v-card-text> test </v-card-text>
+                  <span class="font-weight-bold card-title-style">
+                    {{ item.title }}
+                  </span>
+                  <!-- {{ item }} -->
+                  <v-card-text class="card-value-text-style"
+                    >{{ item.value }}
+                  </v-card-text>
                 </v-card-item>
               </v-card>
-            </v-card-item>
-            <v-card-item>
-              <v-card variant="outlined">
-                <v-card-item>
-                  <span> Market Cap. </span>
-                  <v-card-text> test </v-card-text>
-                </v-card-item>
-              </v-card>
-            </v-card-item>
+            </v-col>
           </v-row>
           <v-row class="mt-1 ml-1">
-            <v-card-item>
-              <v-card variant="outlined">
+            <v-col>
+              <v-card class="mr-3 last-card-style" variant="outlined">
                 <v-card-item>
-                  <span> Market Cap. </span>
-                  <v-card-text> test </v-card-text>
+                  <span class="font-weight-bold"> Circulating supply </span>
+                  <v-card-text> {{ circulatingSupply }} </v-card-text>
                 </v-card-item>
               </v-card>
-            </v-card-item>
-            <v-card-item>
-              <v-card variant="outlined">
-                <v-card-item>
-                  <span> Market Cap. </span>
-                  <v-card-text> test </v-card-text>
-                </v-card-item>
-              </v-card>
-            </v-card-item>
+            </v-col>
           </v-row>
-          <v-row class="mt-1 ml-1">
-            <v-card-item>
-              <v-card variant="outlined">
-                <v-card-item>
-                  <span> Market Cap. </span>
-                  <v-card-text> test </v-card-text>
-                </v-card-item>
-              </v-card>
-            </v-card-item>
-            <v-card-item>
-              <v-card variant="outlined">
-                <v-card-item>
-                  <span> Market Cap. </span>
-                  <v-card-text> test </v-card-text>
-                </v-card-item>
-              </v-card>
-            </v-card-item>
-          </v-row>
-          <v-row class="mt-1 ml-1">
-            <v-card-item>
-              <v-card variant="outlined">
-                <v-card-item>
-                  <span> Market Cap. </span>
-                  <v-card-text> test </v-card-text>
-                </v-card-item>
-              </v-card>
-            </v-card-item>           
-          </v-row>
-
           <v-card-actions>
             <v-btn>
               Learn more
-              <v-icon>arrow_forward</v-icon>
+              <v-icon>mdi-arrow-right</v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -123,7 +94,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import axios from "axios";
 import { FlowerSpinner } from "epic-spinners";
 import { Title } from "chart.js";
@@ -133,34 +104,61 @@ const props = defineProps({ symbol: String });
 const selectedCrypto = ref(null);
 const spinner = ref(true);
 const isUpPrice = ref(false);
-const cryptoInformationArr = ref([{
-  title: "Market Cap",
-  value: "test",
-},
-{
-  title: "Volume (24h)",
-  value: "test",
-},
-{
-  title: "FDV",
-  value: "test",
-},
-{
-  title: "Vol/MKT Cap (24h)",
-  value: "test",
-},
-{
-  title: "Total Supply",
-  value: "test",
-},
-{
-  title: "Max Supply",
-  value: "test",
-},
-])
-
-
-
+const marketCapital = computed(() => {
+  return formatMarketCap(selectedCrypto.value?.CIRCULATING_MKT_CAP_USD);
+});
+const Volume24 = computed(() => {
+  return formatMarketCap(
+    selectedCrypto.value?.SPOT_MOVING_24_HOUR_QUOTE_VOLUME_USD,
+  );
+});
+const totalSupply = computed(() => {
+  return formatMarketCap(selectedCrypto.value?.SUPPLY_TOTAL);
+});
+const maxSupply = computed(() => {
+  return formatMarketCap(selectedCrypto.value?.SUPPLY_MAX);
+});
+const circulatingSupply = computed(() => {
+  return formatMarketCap(selectedCrypto.value?.SUPPLY_CIRCULATING);
+});
+const formatMarketCap = (value) => {
+  if (value >= 1e12) return (value / 1e12).toFixed(2) + "T";
+  if (value >= 1e9) return (value / 1e9).toFixed(2) + "B";
+  if (value >= 1e6) return (value / 1e6).toFixed(2) + "M";
+  return value?.toFixed(2);
+};
+const cryptoInformationArr = ref([
+  [
+    {
+      title: "Market Cap",
+      value: marketCapital,
+    },
+    {
+      title: "Volume (24h)",
+      value: Volume24,
+    },
+  ],
+  [
+    {
+      title: "FDV",
+      value: "test",
+    },
+    {
+      title: "MKT Cap(24h)",
+      value: "test",
+    },
+  ],
+  [
+    {
+      title: "Total Supply",
+      value: totalSupply,
+    },
+    {
+      title: "Max Supply",
+      value: maxSupply,
+    },
+  ],
+]);
 
 const getCardInfo = async () => {
   spinner.value = true;
@@ -183,7 +181,20 @@ const getCardInfo = async () => {
     spinner.value = false;
   }
 };
+const getCoinMartketCapInfo = async () => {
+  spinner.value = true;
+  try {
+    const response = await axios.get(
+      `http://localhost:5000/crypto/${props.symbol}`,
+    );
 
+    console.log(response, "=---->  .response");
+  } catch (error) {
+    console.error(error);
+  } finally {
+    spinner.value = false;
+  }
+};
 onMounted(() => {
   spinner.value = true;
 
@@ -210,10 +221,28 @@ onMounted(() => {
   spinner.value = false;
 
   getCardInfo();
+  getCoinMartketCapInfo();
 });
 </script>
 
 <style scoped>
+.last-card-style {
+  height: 80px;
+}
+.card-value-text-style {
+  font-size: 12px;
+  color: white;
+  font-weight: bold;
+  margin-top: -17px;
+}
+.card-title-style {
+  font-size: 13.5px;
+  color: #9c9ea2;
+  font-weight: bold;
+}
+.crypto-information-style {
+  height: 60px;
+}
 .crypto-title {
   font-size: 24px;
   font-weight: bold;
@@ -245,7 +274,7 @@ onMounted(() => {
 }
 
 .chart-container {
-  margin-top: 120px;
+  margin-top: 160px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -254,5 +283,6 @@ onMounted(() => {
 .card-content {
   max-width: 350px;
   text-align: center;
+  border-color: transparent;
 }
 </style>

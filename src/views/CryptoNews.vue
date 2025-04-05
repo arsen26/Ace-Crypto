@@ -23,9 +23,9 @@
         {{ button.title }}</v-btn
       >
     </v-row>
-    <v-row>
+    <v-row >
       <v-col>
-        <v-card class="mx-auto" max-width="400">
+        <v-card class="mx-auto card-style" max-width="400">
           <v-img :src="mainSelectedNews.urlToImage" cover> </v-img>
           <v-card-title>
             {{ mainSelectedNews.title }}
@@ -39,11 +39,37 @@
         </v-card>
       </v-col>
       <v-col>
-        <v-card> </v-card>
-        <v-card> </v-card>
+        <v-card class="card-style">
+          <v-img :src="mainSelectedNews.urlToImage" cover> </v-img>
+          <v-card-title>
+          test
+          </v-card-title>
+          <v-card-text>
+            test2
+          </v-card-text>
+        </v-card>      
+        <v-card class="card-style">
+          <v-card-title> test </v-card-title>
+          <v-card-text>
+            test2
+          </v-card-text>
+        </v-card>
       </v-col>
       <v-col>
-        <a href=""></a>
+        <div v-for="(item, index) in cryptoNewsStore.cryptoNews" :key="index">
+           <v-avatar>
+          <v-icon
+          color="#bcfc3c"
+          >
+          radio_button_checked
+          </v-icon>         
+        </v-avatar>
+        <span class="date-time-published-style">{{ item.publishedAt }}</span>
+        <br>
+        <a class="link-to-news" :href="item.url" target="_blank">{{ item.title }}</a>
+        <v-divider color="#bcfc3c"></v-divider>
+      </div>
+       
       </v-col>
     </v-row>
   </v-container>
@@ -54,7 +80,9 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 import { FlowerSpinner } from "epic-spinners";
 import { useCryptoNewsStore } from "../../store/CryptoNews";
-
+import { useDate } from 'vuetify'
+ 
+const formatDate = useDate();
 const cryptoNewsStore = useCryptoNewsStore();
 const buttons = ref([
   {
@@ -75,11 +103,14 @@ const mainSelectedNews = ref({});
 const searchForNews = async () => {
   try {
     const res = await axios.get(
-      `https://newsapi.org/v2/everything?q=${searchTerm.value}&from=2025-02-28&language=en&sortBy=publishedAt&apiKey=22b6185b96b8452eb38323140dcd6f86`,
+      `https://newsapi.org/v2/everything?q=${searchTerm.value}&from=2025-03-28&language=en&sortBy=publishedAt&apiKey=22b6185b96b8452eb38323140dcd6f86`,
     );
     mainSelectedNews.value = res.data.articles[0];
     console.log(mainSelectedNews.value, "=-mainSelectedNews");
     console.log(res.data.articles, "=-res.articles");
+    res.data.articles.forEach((item) => {
+      item.publishedAt = formatDate.format(item.publishedAt, "fullDateTime24h");
+    });
     cryptoNewsStore.setCryptoNews(res.data.articles);
   } catch (error) {
     console.error("Error fetching news:", error);
@@ -91,6 +122,20 @@ const sendToNews = (url) => {
 </script>
 
 <style scoped>
+.date-time-published-style{
+  color: #bcfc3c;
+  font-size: 15px;
+  opacity: 0.9;
+}
+.link-to-news{
+  color: white;
+  text-decoration: none;
+  font-weight: 900;
+}
+.card-style {
+  background-color: transparent;
+  color: white;
+}
 .search-bar {
   color: #bcfc3c;
 }
