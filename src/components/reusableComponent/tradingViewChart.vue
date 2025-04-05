@@ -4,25 +4,97 @@
       <flower-spinner :animation-duration="2500" :size="70" color="#bcfc3c" />
     </div>
     <v-row class="justify-center align-center chart-container">
+      <v-divider></v-divider>
       <!-- First column will be informations about crypto-->
-      <v-col class="details-style" cols="12" lg="4" md="6" sm="12">
-        <v-card class="mx-auto card-content">
-          <v-card-item>
-            <div>
-              <div class="text-overline mb-1"></div>
-              <div class="text-h6 mb-1 crypto-title">
-                <v-avatar
-                  :image="selectedCrypto?.LOGO_URL"
-                  size="30"
-                ></v-avatar>
-                {{ selectedCrypto?.NAME }}
-                <span class="crypto-symbol">{{ selectedCrypto?.SYMBOL }}</span>
-              </div>
-              <div class="text-caption">
-                {{ selectedCrypto?.ASSET_DESCRIPTION_SNIPPET }}
-              </div>
-            </div>
-          </v-card-item>
+      <v-col class="details-style" cols="12" lg="3" md="5" sm="12">
+        <div>
+          <div class="text-h6 mb-1 crypto-title">
+            <v-avatar :image="selectedCrypto?.LOGO_URL" size="30"></v-avatar>
+            {{ selectedCrypto?.NAME }}
+
+            <span class="crypto-symbol"
+              >{{ selectedCrypto?.SYMBOL }}
+
+              <v-icon size="30" :color="isUpPrice ? '#bcfc3c' : '#ff0000'">{{
+                isUpPrice ? "arrow_drop_up" : "arrow_drop_down"
+              }}</v-icon>
+              {{
+                selectedCrypto?.SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_CONVERSION?.toFixed(
+                  2,
+                )
+              }}%
+            </span>
+            <h3>$ {{ selectedCrypto?.PRICE_USD?.toFixed(4) }}</h3>
+          </div>
+          <div class="text-caption">
+            {{ selectedCrypto?.ASSET_DESCRIPTION_SNIPPET }}
+          </div>
+        </div>
+        <v-card class="mx-auto card-content" variant="outlined" color="white">
+          <v-row class="mt-1 ml-1">
+            <v-card-item>
+              <v-card variant="outlined">
+                <v-card-item>
+                  <span> Market Cap. </span>
+                  <v-card-text> test </v-card-text>
+                </v-card-item>
+              </v-card>
+            </v-card-item>
+            <v-card-item>
+              <v-card variant="outlined">
+                <v-card-item>
+                  <span> Market Cap. </span>
+                  <v-card-text> test </v-card-text>
+                </v-card-item>
+              </v-card>
+            </v-card-item>
+          </v-row>
+          <v-row class="mt-1 ml-1">
+            <v-card-item>
+              <v-card variant="outlined">
+                <v-card-item>
+                  <span> Market Cap. </span>
+                  <v-card-text> test </v-card-text>
+                </v-card-item>
+              </v-card>
+            </v-card-item>
+            <v-card-item>
+              <v-card variant="outlined">
+                <v-card-item>
+                  <span> Market Cap. </span>
+                  <v-card-text> test </v-card-text>
+                </v-card-item>
+              </v-card>
+            </v-card-item>
+          </v-row>
+          <v-row class="mt-1 ml-1">
+            <v-card-item>
+              <v-card variant="outlined">
+                <v-card-item>
+                  <span> Market Cap. </span>
+                  <v-card-text> test </v-card-text>
+                </v-card-item>
+              </v-card>
+            </v-card-item>
+            <v-card-item>
+              <v-card variant="outlined">
+                <v-card-item>
+                  <span> Market Cap. </span>
+                  <v-card-text> test </v-card-text>
+                </v-card-item>
+              </v-card>
+            </v-card-item>
+          </v-row>
+          <v-row class="mt-1 ml-1">
+            <v-card-item>
+              <v-card variant="outlined">
+                <v-card-item>
+                  <span> Market Cap. </span>
+                  <v-card-text> test </v-card-text>
+                </v-card-item>
+              </v-card>
+            </v-card-item>           
+          </v-row>
 
           <v-card-actions>
             <v-btn>
@@ -41,7 +113,7 @@
               rel="noopener nofollow"
               target="_blank"
             >
-              <span class="blue-text">Track all markets on TradingView</span>
+              <!-- <span class="blue-text">Track all markets on TradingView</span> -->
             </a>
           </div>
         </div>
@@ -54,12 +126,41 @@
 import { onMounted, ref } from "vue";
 import axios from "axios";
 import { FlowerSpinner } from "epic-spinners";
-import { f } from "vue-cryptoicon";
+import { Title } from "chart.js";
 
 const widgetContainer = ref(null);
 const props = defineProps({ symbol: String });
 const selectedCrypto = ref(null);
 const spinner = ref(true);
+const isUpPrice = ref(false);
+const cryptoInformationArr = ref([{
+  title: "Market Cap",
+  value: "test",
+},
+{
+  title: "Volume (24h)",
+  value: "test",
+},
+{
+  title: "FDV",
+  value: "test",
+},
+{
+  title: "Vol/MKT Cap (24h)",
+  value: "test",
+},
+{
+  title: "Total Supply",
+  value: "test",
+},
+{
+  title: "Max Supply",
+  value: "test",
+},
+])
+
+
+
 
 const getCardInfo = async () => {
   spinner.value = true;
@@ -69,6 +170,13 @@ const getCardInfo = async () => {
     );
     selectedCrypto.value = response.data.Data?.[props.symbol];
     console.log(selectedCrypto.value, "=->  selectedCrypto.value");
+    if (
+      selectedCrypto.value.SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_CONVERSION > 0
+    ) {
+      isUpPrice.value = true;
+    } else {
+      isUpPrice.value = false;
+    }
   } catch (error) {
     console.error(error);
   } finally {
@@ -117,6 +225,7 @@ onMounted(() => {
 }
 .details-style {
   border: 1px solid #e0e0e0;
+  color: white;
 }
 .spinner-overlay {
   position: fixed;
@@ -136,7 +245,7 @@ onMounted(() => {
 }
 
 .chart-container {
-  margin-top: 100px;
+  margin-top: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
