@@ -1,88 +1,88 @@
 <template>
-  <v-row
-    v-if="width > 800"
-    class="desktop-menu"
-    align="center"
-    justify="center"
-  >
-    <v-col cols="auto">
+  <div>
+    <v-row
+      v-if="width > 800"
+      class="desktop-menu"
+      align="center"
+      justify="center"
+    >
+      <v-col cols="auto">
+        <v-btn
+          class="button-font"
+          color="#bcfc3c"
+          v-for="(button, index) in leftButtons"
+          :key="'left' + index"
+          variant="text"
+          @click="sendToPath(button.sendTo)"
+        >
+          {{ button.title }}
+        </v-btn>
+      </v-col>
+      <v-col cols="auto">
+        <img
+          class="menu-logo"
+          :width="120"
+          aspect-ratio="4/3"
+          contain
+          :src="LogoMenu"
+        />
+      </v-col>
+      <v-col cols="auto">
+        <v-btn
+          class="button-font"
+          color="#bcfc3c"
+          v-for="(button, index) in rightButtons"
+          :key="'right' + index"
+          variant="text"
+          @click="sendToPath(button.sendTo)"
+        >
+          {{ button.title }}
+        </v-btn>
+      </v-col>
+    </v-row>
+    <v-app-bar v-if="width < 800" color="#171a1e">
+      <h2 class="name-style name-style-mobile">
+        Ace
+        <span class="last-name-style last-name-style-mobile">Crypto</span>
+      </h2>
+      <v-spacer></v-spacer>
       <v-btn
-        class="button-font"
-        color="#bcfc3c"
-        v-for="(button, index) in leftButtons"
-        :key="'left' + index"
+        icon
+        @click.stop="drawer = !drawer"
+        style="color: white"
         variant="text"
-        @click="sendToPath(button.sendTo)"
       >
-        {{ button.title }}
+        <v-icon>menu</v-icon>
       </v-btn>
-    </v-col>
-    <v-col cols="auto">
-      <img
+    </v-app-bar>
+
+    <v-navigation-drawer
+      style="background-color: #222831 !important; color: white"
+      v-model="drawer"
+      temporary
+      location="right"
+      ><img
         class="menu-logo"
         :width="120"
         aspect-ratio="4/3"
         contain
         :src="LogoMenu"
       />
-    </v-col>
-    <v-col cols="auto">
-      <v-btn
-        class="button-font"
-        color="#bcfc3c"
-        v-for="(button, index) in rightButtons"
-        :key="'right' + index"
-        variant="text"
-        @click="sendToPath(button.sendTo)"
-      >
-        {{ button.title }}
-      </v-btn>
-    </v-col>
-  </v-row>
-  <v-app-bar v-if="width < 800" color="#171a1e" prominent>
-    <v-row class="row-icon-mobile-holder">
-      <h2 class="name-style name-style-mobile">
-        Ace
-        <span class="last-name-style last-name-style-mobile">Crypto</span>
-      </h2>
-      <v-spacer></v-spacer>
-
-      <v-app-bar-nav-icon
-        style="color: white"
-        variant="text"
-        @click.stop="drawer = !drawer"
-      ></v-app-bar-nav-icon>
-    </v-row>
-
-    <v-spacer></v-spacer>
-  </v-app-bar>
-
-  <v-navigation-drawer
-    style="background-color: #222831 !important; color: white"
-    v-model="drawer"
-    temporary
-    location="right"
-    ><img
-      class="menu-logo"
-      :width="120"
-      aspect-ratio="4/3"
-      contain
-      :src="LogoMenu"
-    />
-    <v-list>
-      <v-list-item
-        v-for="(item, index) in menuItems"
-        :key="index"
-        :title="item.title"
-        link
-        drawer="false;"
-      >
-        <template v-slot:prepend>
-          <v-icon class="mobile-icons" :icon="item.icon"></v-icon>
-        </template>
-      </v-list-item>
-    </v-list>
-  </v-navigation-drawer>
+      <v-list>
+        <v-list-item
+          v-for="(item, index) in menuItems"
+          :key="index"
+          :title="item.title"
+          link
+          drawer="false;"
+        >
+          <template v-slot:prepend>
+            <v-icon class="mobile-icons" :icon="item.icon"></v-icon>
+          </template>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+  </div>
 </template>
 
 <script setup>

@@ -1,48 +1,46 @@
 <template>
-  <v-row class="justify-center alifn-center container-text">
-    <div>
-      <span class="your-style">Your</span>
-      <span class="trusted-style"> trusted</span>
-      <span class="partner-style"> partner of cryptocurrency</span>
-    </div>
-  </v-row>
-  <v-row class="container">
-    <v-col
-      v-for="(card, i) in cardsItems"
-      :key="i"
-      cols="12"
-      lg="3"
-      md="3"
-      sm="4"
-    >
-      <v-card
-        :color="card.color"
-        class="mx-auto card-style"
-        :style="cardStyle(i)"
+  <div>
+    <v-row class="justify-center alifn-center container-text">
+      <div>
+        <span class="your-style">Your</span>
+        <span class="trusted-style"> trusted</span>
+        <span class="partner-style"> partner of cryptocurrency</span>
+      </div>
+    </v-row>
+    <v-row class="container">
+      <v-col
+        v-for="(card, i) in cardsItems"
+        :key="i"
+        cols="12"
+        lg="3"
+        md="3"
+        sm="4"
       >
-        <v-card-item>
-          <div>
-            <div class="text-overline mb-1">{{ card.number }}</div>
-            <div class="text-h6 mb-1 card-title-style">
-              {{ card.title }}
+        <v-card
+          :color="card.color"
+          class="mx-auto card-style"
+          :style="cardStyle(i)"
+        >
+          <v-card-item>
+            <div>
+              <div class="text-overline mb-1">{{ card.number }}</div>
+              <div class="text-h6 mb-1 card-title-style">
+                {{ card.title }}
+              </div>
+              <div class="text-caption">{{ card.description }}</div>
             </div>
-            <div class="text-caption">{{ card.description }}</div>
-          </div>
-        </v-card-item>
+          </v-card-item>
 
-        <v-card-actions>
-          <v-btn>
-            Learn More
-            <v-icon>arrow_forward</v-icon>
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
-
-  <!-- <v-row>
-    <tradingViewChart />
-  </v-row> -->
+          <v-card-actions>
+            <v-btn>
+              Learn More
+              <v-icon>arrow_forward</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script setup>
@@ -107,7 +105,7 @@ const cardStyle = (i) => {
   font-family: "Tektur", sans-serif;
   font-size: 20px;
   font-weight: 600;
-  margin-left:;
+  /* margin-left:; */
 }
 .container-text {
   background-color: #080d0f;

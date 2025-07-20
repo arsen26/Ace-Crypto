@@ -1,32 +1,34 @@
 <template>
-  <v-row class="hero-container">
-    <v-col cols="6">
-      <h3 class="hero-motto">Track your crypto investments</h3>
-      <h1 class="hero-title">
-        Ace Crypto – The best platform for <br />
-        <span id="typed"></span>
-      </h1>
-      <v-divider color="#bcfc3c"></v-divider>
-      <br /><br />
-      <v-avatar
-        v-for="crypto in cryptoIcons"
-        :key="crypto.symbol"
-        :image="crypto.iconUrl"
-        size="50"
-        class="crypto-icon"
-        @click="getDetailsInfo(crypto.symbol)"
-      ></v-avatar>
-      <v-avatar size="50" class="crypto-icons-last-one"> +48 </v-avatar>
-      <br /><br />
-      <v-divider color="#bcfc3c"></v-divider>
-      <h3 class="hero-motto">
-        Click on an icon above to get the latest updates
-      </h3>
-    </v-col>
-    <v-col cols="4">
-      <v-img :src="image"></v-img>
-    </v-col>
-  </v-row>
+  <div>
+    <v-row class="hero-container justify-center align-center">
+      <v-col cols="12" sm="12" md="6" lg="6" class="text-center">
+        <h3 class="hero-motto">Track your crypto investments</h3>
+        <h1 class="hero-title">
+          Ace Crypto – The best platform for <br />
+          <span id="typed"></span>
+        </h1>
+        <v-divider color="#bcfc3c"></v-divider>
+        <br /><br />
+        <v-avatar
+          v-for="crypto in cryptoIcons"
+          :key="crypto.symbol"
+          :image="crypto.iconUrl"
+          size="50"
+          class="crypto-icon"
+          @click="getDetailsInfo(crypto.symbol)"
+        ></v-avatar>
+        <v-avatar size="50" class="crypto-icons-last-one"> +48 </v-avatar>
+        <br /><br />
+        <v-divider color="#bcfc3c"></v-divider>
+        <h3 class="hero-motto">
+          Click on an icon above to get the latest updates
+        </h3>
+      </v-col>
+      <v-col cols="12" sm="12" md="6" lg="6" class="text-center">
+        <v-img :src="image"></v-img>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script setup>

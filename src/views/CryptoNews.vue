@@ -1,29 +1,35 @@
 <template>
-  <v-container class="crypto-news-container">
-    <v-row>
-      <v-text-field
-        label="Search for news"
-        variant="outlined"
-        class="search-bar"
-        append-inner-icon="search"
-        rounded
-        v-model="searchTerm"
-        clearable
-        @keyup.enter="searchForNews"
-        @click:append-inner="searchForNews"
-      />
+  <div class="crypto-news-container">
+    <v-row class="justify-center align-center">
+      <v-col cols="12" md="10" sm="10" lg="11" class="text-center">
+        <v-text-field
+          label="Search for news"
+          variant="outlined"
+          class="search-bar"
+          append-inner-icon="search"
+          rounded
+          v-model="searchTerm"
+          clearable
+          @keyup.enter="searchForNews"
+          @click:append-inner="searchForNews"
+        />
+      </v-col>
+    </v-row>
+    <v-row class="justify-center align-center">
+      <v-col cols="2" md="2" sm="2" lg="" class="text-center">
+        <h2>Quick links:</h2></v-col
+      >
+      <v-col cols="10" md="10" sm="10" lg="10" class="text-start">
+        <v-btn
+          v-for="(button, index) in buttons"
+          variant="text"
+          @click="searchTerm = button.title"
+        >
+          {{ button.title }}</v-btn
+        >
+      </v-col>
     </v-row>
     <v-row>
-      <h2>Quick links:</h2>
-      <v-btn
-        v-for="(button, index) in buttons"
-        variant="text"
-        @click="searchTerm = button.title"
-      >
-        {{ button.title }}</v-btn
-      >
-    </v-row>
-    <v-row >
       <v-col>
         <v-card class="mx-auto card-style" max-width="400">
           <v-img :src="mainSelectedNews.urlToImage" cover> </v-img>
@@ -41,38 +47,29 @@
       <v-col>
         <v-card class="card-style">
           <v-img :src="mainSelectedNews.urlToImage" cover> </v-img>
-          <v-card-title>
-          test
-          </v-card-title>
-          <v-card-text>
-            test2
-          </v-card-text>
-        </v-card>      
+          <v-card-title> test </v-card-title>
+          <v-card-text> test2 </v-card-text>
+        </v-card>
         <v-card class="card-style">
           <v-card-title> test </v-card-title>
-          <v-card-text>
-            test2
-          </v-card-text>
+          <v-card-text> test2 </v-card-text>
         </v-card>
       </v-col>
       <v-col>
         <div v-for="(item, index) in cryptoNewsStore.cryptoNews" :key="index">
-           <v-avatar>
-          <v-icon
-          color="#bcfc3c"
-          >
-          radio_button_checked
-          </v-icon>         
-        </v-avatar>
-        <span class="date-time-published-style">{{ item.publishedAt }}</span>
-        <br>
-        <a class="link-to-news" :href="item.url" target="_blank">{{ item.title }}</a>
-        <v-divider color="#bcfc3c"></v-divider>
-      </div>
-       
+          <v-avatar>
+            <v-icon color="#bcfc3c"> radio_button_checked </v-icon>
+          </v-avatar>
+          <span class="date-time-published-style">{{ item.publishedAt }}</span>
+          <br />
+          <a class="link-to-news" :href="item.url" target="_blank">{{
+            item.title
+          }}</a>
+          <v-divider color="#bcfc3c"></v-divider>
+        </div>
       </v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script setup>
@@ -80,8 +77,8 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 import { FlowerSpinner } from "epic-spinners";
 import { useCryptoNewsStore } from "../../store/CryptoNews";
-import { useDate } from 'vuetify'
- 
+import { useDate } from "vuetify";
+
 const formatDate = useDate();
 const cryptoNewsStore = useCryptoNewsStore();
 const buttons = ref([
@@ -122,12 +119,12 @@ const sendToNews = (url) => {
 </script>
 
 <style scoped>
-.date-time-published-style{
+.date-time-published-style {
   color: #bcfc3c;
   font-size: 15px;
   opacity: 0.9;
 }
-.link-to-news{
+.link-to-news {
   color: white;
   text-decoration: none;
   font-weight: 900;

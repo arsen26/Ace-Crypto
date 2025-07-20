@@ -1,66 +1,86 @@
 <template>
-  <v-row class="justify-center align-center container">
-    <v-col>
-      <v-row class="justify-center align-center">
-        <h1 class="crypto-list-title">Crypto List</h1>
-      </v-row>
-      <v-row class="justify-center align-center">
-        <div class="crypto-list">
-          <v-sheet border rounded>
-            <v-data-table-virtual
-              class="custom-table"
-              :headers="cryptoList"
+  <div>
+    <v-row class="justify-center align-center container">
+      <v-col>
+        <v-row class="justify-center align-center">
+          <h1 class="crypto-list-title">Crypto List</h1>
+        </v-row>
+        <v-row class="justify-center align-center">
+          <v-col cols="6" class="d-flex justify-center align-center">
+            <v-text-field
+              label="Search"
+              v-model="search"
+              class="search-field"
+              variant="outlined"
+              color="#bcfc3c"
               density="compact"
-              items-per-page="10"
-              :items="items"
-              fixed-header
-              :loading="isLoading"
-              :loading-text="spinner ? 'Loading...' : ''"
-              height="500"
-              :mobile="mobile"
-              @click:row="sendToCryptoDetails"
+              hide-details
+              clearable
+              :placeholder="'Search by name or symbol'"
             >
-              <template #end>
-                <v-container
-                  class="d-flex align-center justify-center"
-                  style="height: 500px"
-                >
-                  <flower-spinner
-                    :animation-duration="2500"
-                    :size="70"
-                    color="#bcfc3c"
-                  />
-                </v-container>
-              </template>
+            </v-text-field>
+          </v-col>
+        </v-row>
 
-              <template v-slot:column.header="{ column }">
-                <th class="my-header-style">
-                  <span>{{ column.title }}</span>
-                </th>
-              </template>
-              <template
-                v-for="key in [
-                  'SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD',
-                  'SPOT_MOVING_7_DAY_CHANGE_PERCENTAGE_USD',
-                  'SPOT_MOVING_30_DAY_CHANGE_PERCENTAGE_USD',
-                ]"
-                v-slot:[`item.${key}`]="{ item }"
+        <v-row class="justify-center align-center">
+          <div class="crypto-list">
+            <v-sheet border rounded>
+              <v-data-table-virtual
+                class="custom-table"
+                :headers="cryptoList"
+                density="compact"
+                items-per-page="10"
+                :items="items"
+                fixed-header
+                :search="search"
+                :loading="isLoading"
+                :loading-text="spinner ? 'Loading...' : ''"
+                height="500"
+                :mobile="mobile"
+                @click:row="sendToCryptoDetails"
               >
-                <span
-                  :class="{
-                    'text-green': item?.[key] > 0,
-                    'text-red': item?.[key] < 0,
-                  }"
+                <template #end>
+                  <v-container
+                    class="d-flex align-center justify-center"
+                    style="height: 500px"
+                  >
+                    <flower-spinner
+                      :animation-duration="2500"
+                      :size="70"
+                      color="#bcfc3c"
+                    />
+                  </v-container>
+                </template>
+
+                <template v-slot:column.header="{ column }">
+                  <th class="my-header-style">
+                    <span>{{ column.title }}</span>
+                  </th>
+                </template>
+                <template
+                  v-for="key in [
+                    'SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD',
+                    'SPOT_MOVING_7_DAY_CHANGE_PERCENTAGE_USD',
+                    'SPOT_MOVING_30_DAY_CHANGE_PERCENTAGE_USD',
+                  ]"
+                  v-slot:[`item.${key}`]="{ item }"
                 >
-                  {{ item[key]?.toFixed(2) }}
-                </span>
-              </template>
-            </v-data-table-virtual>
-          </v-sheet>
-        </div>
-      </v-row>
-    </v-col>
-  </v-row>
+                  <span
+                    :class="{
+                      'text-green': item?.[key] > 0,
+                      'text-red': item?.[key] < 0,
+                    }"
+                  >
+                    {{ item[key]?.toFixed(2) }}
+                  </span>
+                </template>
+              </v-data-table-virtual>
+            </v-sheet>
+          </div>
+        </v-row>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script setup>
@@ -78,6 +98,7 @@ const { mobile } = useDisplay();
 const spinner = ref(false);
 const isLoading = ref(false);
 const route = useRoute();
+const search = ref("");
 const cryptoList = ref([
   { title: "#", value: "number", width: "20px", class: "my-header-style" },
   { title: "Name", value: "name", width: "200px", class: "my-header-style" },
@@ -169,8 +190,10 @@ const formatMarketCap = (value) => {
   if (value >= 1e12) return (value / 1e12).toFixed(1) + "T";
   if (value >= 1e9) return (value / 1e9).toFixed(1) + "B";
   if (value >= 1e6) return (value / 1e6).toFixed(1) + "M";
+  if (value >= 1e3) return (value / 1e3).toFixed(1) + "K";
   return value.toFixed(2);
 };
+
 onMounted(async () => {
   if (cryptoDetailsStore.cryptoList.length == 0) {
     await getData();
@@ -185,6 +208,16 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.search-field >>> .v-field__outline {
+  border-color: #bcfc3c !important;
+}
+.search-field >>> .v-label {
+  color: #bcfc3c !important;
+}
+.search-field >>> .v-input__control {
+  color: #bcfc3c !important;
+}
+
 .spinner-overlay {
   position: static;
   top: 50%;
@@ -196,7 +229,6 @@ onMounted(async () => {
   justify-content: center;
 }
 .container {
-  margin-top: 60px;
   background-color: #080d0f;
 }
 .crypto-list-title {

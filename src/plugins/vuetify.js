@@ -1,15 +1,19 @@
+// vuetify.js
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
+import { h } from "vue";
 import { aliases, mdi } from "vuetify/iconsets/mdi";
-import { md } from "vuetify/iconsets/md";
 
 const vuetify = createVuetify({
   icons: {
-    defaultSet: "md",
+    defaultSet: "material-symbols-outlined",
     aliases,
     sets: {
-      md,
       mdi,
+      "material-symbols-outlined": {
+        component: (props) =>
+          h("span", { class: "material-symbols-outlined" }, props.icon),
+      },
     },
   },
 });
