@@ -5,76 +5,12 @@
     </div>
     <v-row class="justify-center align-center chart-container">
       <v-divider></v-divider>
-      <!-- First column will be informations about crypto-->
-      <v-col class="details-style" cols="12" lg="3" md="5" sm="12">
-        <div>
-          <div class="text-h6 mb-1 crypto-title">
-            <v-avatar :image="selectedCrypto?.LOGO_URL" size="30"></v-avatar>
-            {{ selectedCrypto?.NAME }}
-
-            <span class="crypto-symbol"
-              >{{ selectedCrypto?.SYMBOL }}
-
-              <v-icon size="30" :color="isUpPrice ? '#bcfc3c' : '#ff0000'">{{
-                isUpPrice ? "arrow_drop_up" : "arrow_drop_down"
-              }}</v-icon>
-              {{
-                selectedCrypto?.SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_CONVERSION?.toFixed(
-                  2,
-                )
-              }}%
-            </span>
-            <h3>$ {{ selectedCrypto?.PRICE_USD?.toFixed(4) }}</h3>
-          </div>
-          <div class="text-caption">
-            {{ selectedCrypto?.ASSET_DESCRIPTION_SNIPPET }}
-          </div>
-        </div>
-        <v-card class="mx-auto card-content" variant="outlined" color="white">
-          <v-row
-            v-for="(row, rowIndex) in cryptoInformationArr"
-            :key="rowIndex"
-            class="mt-1 ml-0"
-          >
-            <v-col
-              v-for="(item, colIndex) in row"
-              :key="colIndex"
-              cols="12"
-              sm="6"
-              md="6"
-              class="pd-0 pr-1"
-            >
-              <v-card class="mr-5 crypto-information-style" variant="outlined">
-                <v-card-item>
-                  <span class="font-weight-bold card-title-style">
-                    {{ item.title }}
-                  </span>
-                  <!-- {{ item }} -->
-                  <v-card-text class="card-value-text-style"
-                    >{{ item.value }}
-                  </v-card-text>
-                </v-card-item>
-              </v-card>
-            </v-col>
-          </v-row>
-          <v-row class="mt-1 ml-1">
-            <v-col>
-              <v-card class="mr-3 last-card-style" variant="outlined">
-                <v-card-item>
-                  <span class="font-weight-bold"> Circulating supply </span>
-                  <v-card-text> {{ circulatingSupply }} </v-card-text>
-                </v-card-item>
-              </v-card>
-            </v-col>
-          </v-row>
-          <v-card-actions>
-            <v-btn>
-              Learn more
-              <v-icon>mdi-arrow-right</v-icon>
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
+      <CryptoDetails
+        :crypto="selectedCrypto"
+        :infoArray="cryptoInformationArr"
+        :circulatingSupply="circulatingSupply"
+        :isUp="isUpPrice"
+      />
       <v-col cols="12" lg="8" md="6" sm="12">
         <div ref="widgetContainer" class="tradingview-widget-container">
           <div class="tradingview-widget-container__widget"></div>
@@ -84,7 +20,6 @@
               rel="noopener nofollow"
               target="_blank"
             >
-              <!-- <span class="blue-text">Track all markets on TradingView</span> -->
             </a>
           </div>
         </div>
@@ -97,7 +32,7 @@
 import { computed, onMounted, ref } from "vue";
 import axios from "axios";
 import { FlowerSpinner } from "epic-spinners";
-import { Title } from "chart.js";
+import CryptoDetails from "@/components/reusableComponent/CryptoDetails.vue";
 
 const widgetContainer = ref(null);
 const props = defineProps({ symbol: String });
@@ -226,36 +161,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.last-card-style {
-  height: 80px;
-}
-.card-value-text-style {
-  font-size: 12px;
-  color: white;
-  font-weight: bold;
-  margin-top: -17px;
-}
-.card-title-style {
-  font-size: 13.5px;
-  color: #9c9ea2;
-  font-weight: bold;
-}
-.crypto-information-style {
-  height: 60px;
-}
-.crypto-title {
-  font-size: 24px;
-  font-weight: bold;
-}
-.crypto-symbol {
-  font-size: 18px;
-  font-weight: normal;
-  color: #9c9ea2;
-}
-.details-style {
-  border: 1px solid #e0e0e0;
-  color: white;
-}
 .spinner-overlay {
   position: fixed;
   top: 0;
@@ -268,21 +173,12 @@ onMounted(() => {
   z-index: 9999;
 }
 .tradingview-widget-container {
-  margin-top: 100px;
-  height: 600px !important;
+  margin-top: 30px;
+  height: 593px !important;
   width: 100% !important;
 }
 
 .chart-container {
   margin-top: 160px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.card-content {
-  max-width: 350px;
-  text-align: center;
-  border-color: transparent;
 }
 </style>
