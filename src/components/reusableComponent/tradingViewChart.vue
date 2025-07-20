@@ -4,7 +4,7 @@
       <flower-spinner :animation-duration="2500" :size="70" color="#bcfc3c" />
     </div>
     <v-row class="justify-center align-center chart-container">
-      <v-divider></v-divider>
+      <v-divider class="border-opacity-100" color="white"></v-divider>
       <CryptoDetails
         :crypto="selectedCrypto"
         :infoArray="cryptoInformationArr"
@@ -179,6 +179,6 @@ onMounted(() => {
 }
 
 .chart-container {
-  margin-top: 160px;
+  margin-top: 120px;
 }
 </style>

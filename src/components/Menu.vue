@@ -153,8 +153,9 @@ onBeforeUnmount(() => {
   top: 0;
   left: 0;
   width: 100%;
+  height: 120px;
   background-color: #080d0f;
-  z-index: 1000;
+ z-index: 9999; 
   padding: 10px 0;
 }
 </style>
